@@ -1,0 +1,19 @@
+
+
+        Pseudo account(sudo kod ) adim adim
+
+        amount : miktar
+
+        checking account : vadesiz hesap
+        saving account : vadeli hesap
+
+        para cekme: withdraw
+        para yatirma : Deposit
+
+        double checkingBalace; checking icin bakiyemiz
+        double savingNalance; saving bakiyemiz
+
+
+
+        int accountNumber  = hesap numarasi
+        int pinNumber = sifre
