@@ -5,28 +5,27 @@ import java.util.Scanner;
 
 public class Account {
 
-
-    private int accountNumber;      // hesap numarasi
-    private int pinNumber;          // sifre
-
+    private int accountNumber;// hesap numarasi
+    private int pinNumber;//sifre
     private double checkingBalance; // vadesiz hesap bakiyesi
-    private double savingBalance;    // vadeli hesa bakiyesi
-
+    private double savingBalance; //vadeli hesap bakiyesi
     DecimalFormat moneyFormat = new DecimalFormat("'$'###,##0.00");
     Scanner input = new Scanner(System.in);
-
 
     public int getAccountNumber() {
         return accountNumber;
     }
 
+
     public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
 
+
     public int getPinNumber() {
         return pinNumber;
     }
+
 
     public void setPinNumber(int pinNumber) {
         this.pinNumber = pinNumber;
@@ -36,120 +35,106 @@ public class Account {
         return checkingBalance;
     }
 
-    public void setCheckkingBalance(double checkkingBalance) {
-        this.checkingBalance = checkkingBalance;
+    public void setCheckingBalance(double checkingBalance) {
+        this.checkingBalance = checkingBalance;
     }
+
 
     public double getSavingBalance() {
         return savingBalance;
     }
 
-    public void setSavingNalance(double savingNalance) {
-        this.savingBalance = savingNalance;
+
+    public void setSavingBalance(double savingBalance) {
+        this.savingBalance = savingBalance;
     }
+
 
     public Scanner getInput() {
         return input;
     }
+
 
     public void setInput(Scanner input) {
         this.input = input;
     }
 
 
-
-    // para cekme  ==> vadesiz hesap (checking Balance) para Cekme Isleminde nSonra Kalan Miktari hesaplama      amount: miktar
+    //para cekme  => paraCekmeIslemindenSonraKalanMiktar  amount : miktar
     private double calculateCheckingBalanceAfterWithdraw(double amount){
-
-        checkingBalance = checkingBalance - amount;
-
+        //  100              200               100
+        checkingBalance =  checkingBalance - amount;
         return checkingBalance;
-
     }
 
 
-    // para yatirma  ==> vadesiz hesap(checking Balance) para yatirma isleminden sonra bakiyeyi hesapla          amount: miktar
+    //para yatirma para yatirma isleminden sonra kalan bakiyeyi hesapla
     private double calculateCheckingBalanceAfterDeposit(double amount){
-
+        //vadesiz bakiye 205      200             5
         checkingBalance = checkingBalance + amount;
-
         return checkingBalance;
-
     }
 
 
-
-    // para cekme  ==> vadeli hesap(saving balance)para Cekme Isleminden Sonra Kalan Miktari hesapla              amount: miktar
+    // para cekme: saving hesabindan para cekildikten sonra kalan bakiye
     private double calculateSavingBalanceAfterWithdraw(double amount){
-
-        savingBalance = savingBalance - amount;
-
+        //vadeli hesap bakiyesi        150             50
+        savingBalance =              savingBalance - amount;
         return savingBalance;
-
     }
 
 
-    // para yatirma  ==> vadeli hesap(saving balance ) para yatirma isleminden sonra bakiyeyi hesapla               amount: miktar
+    //para yatirma: saving hesabina para yatirdiktan sonra geri kalan bakiyeyi hesaplayiniz
     private double calculateSavingBalanceAfterDeposit(double amount){
-
-        savingBalance = savingBalance + amount;
-
-        return savingBalance;
-
+        //vadeli hesap       100           100
+        savingBalance =  savingBalance + amount;
+        return  savingBalance;
     }
 
 
-    //para cekme : checking hesap musteri ile para cekmek icin etkilesime gecelim:
+    //Musteri ile para cekmek icin etkilesime gecelim: checking hesap
     public void getCheckingWithdraw(){
         displayCurrentAmount(checkingBalance);
-        System.out.println("cekmek istediginiz miktari giriniz");
-        double amount = input.nextDouble();
-
-        if (amount<=0){
-            System.out.println("sifir veya eksi tutarlar gecersizdir!");
-            getCheckingWithdraw();// recursive method ==> methodu tekrardan cagirma
-        } else if (amount<=checkingBalance){
-
+        System.out.println("Cekmek istediginiz mikatri giriniz:");
+        double amount = input.nextDouble();//200
+        if(amount <= 0) {
+            System.out.println("Sifir veya eksi rakamlar gecersizdir!");
+            getCheckingWithdraw();//recursive method //medthodu tekrardan cagirma
+        }    // 200           200
+        else if(amount <= checkingBalance){
             calculateCheckingBalanceAfterWithdraw(amount);
             displayCurrentAmount(checkingBalance);
-
-        } else {
-            System.out.println("yetersiz bakiye");
+        }else {
+            System.out.println("Yetersiz bakiye!");
         }
     }
 
 
-
-    //Para yatirma(checking): musteri ile para yatirmak icin etkilesime gecelim
+    //Para yatirma(checking): Musteri ile para yatirmak icin etkilesime gecelim
     public void getCheckingDeposit(){
-        displayCurrentAmount(checkingBalance);
-        System.out.println("yatirmak istediginiz miktari giriniz");
+        displayCurrentAmount(checkingBalance);//hesabinizda su miktar bulunmaktadir
+        System.out.println("Yatirmak istediginiz miktari giriniz:");
         double amount = input.nextDouble();
-
-        if (amount<=0){
-            System.out.println("sifir veya eksi tutarlar gecersizdir!");
+        if(amount <= 0){
+            System.out.println("Sifir veya eksi rakamlar gecersizdir!");
             getCheckingDeposit();
         }else {
             calculateCheckingBalanceAfterDeposit(amount);
             System.out.println();
             displayCurrentAmount(checkingBalance);
         }
-
     }
 
 
-
-    // para cekmek(saving):musteri ile para cekmek icin etkilesime gecelim: saving balance
+    ////Musteri ile para cekmek icin etkilesime gecelim: saving hesap
     public void getSavingWithdraw() {
-
         displayCurrentAmount(savingBalance);
-        System.out.println("cekmek istediginiz miktari giriniz");
+        System.out.println("Cekmek istediginiz mikatri giriniz:");
         double amount = input.nextDouble();
-
-        if (amount<=0) {
-            System.out.println("sifir veya eksi tutarlar gecersizdir!");
+        if(amount <= 0){
+            System.out.println("Sifir veya eksi rakamlar gecersizdir!");
             getSavingWithdraw();
-        } else if (amount<=savingBalance) {
+        }else if(amount <= savingBalance){
             calculateSavingBalanceAfterWithdraw(amount);
             System.out.println();
             displayCurrentAmount(savingBalance);
@@ -159,44 +144,26 @@ public class Account {
     }
 
 
-    // para yatirma(saving) : musteri ile para yatirma icin etkilesime gecelim: saving Balance
+    //Para yatirma(saving): Musteri ile para yatirmak icin etkilesime gecelim
     public void getSavingDeposit(){
         displayCurrentAmount(savingBalance);
-        System.out.println("yatirmak istediginiz miktari giriniz");
+        System.out.println("Yatirmak istediginiz meblayi giriniz:");
         double amount = input.nextDouble();
-
-        if (amount<=0){
-            System.out.println("sifir veya eksi tutarlar gecersizdir!");
+        if(amount <= 0 ){
+            System.out.println("Sifir veya eksi rakamlar gecersizdir!");
             getSavingDeposit();
-        }else {
+        }else{
             calculateSavingBalanceAfterDeposit(amount);
-            System.out.println();
             displayCurrentAmount(savingBalance);
         }
-
     }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    // son bakiyeyi goster
+    //son bakiyeyi goster
     public void displayCurrentAmount(double balance){
-
-        System.out.println("hesabinizda bulunan bakiye: " + moneyFormat.format(balance));
-
+        System.out.println("hesabinizda bulunan bakiye: "+ moneyFormat.format(balance));
     }
-
-
 
 
 
